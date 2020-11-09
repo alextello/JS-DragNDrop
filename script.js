@@ -61,6 +61,25 @@ function dragEnter() {
     this.classList.add('over');
 }
 
+function dragLeave() {
+    this.classList.remove('over');
+    console.log('Event: ', 'dragleave');
+}
+
+// Verificar el orden correcto de la lista
+function checkOrder() {
+    listItems.forEach((listItem, i) => {
+        const personName = listItem.querySelector('.draggable').innerText.trim();
+        if (personName !== richest[i]) {
+            listItem.classList.add('wrong');
+        } else {
+            listItem.classList.remove('wrong');
+            listItem.classList.add('right');
+        }
+    });
+}
+
+// Intercambio de items en evento drag n drop
 function swapItems(from, to) {
     const itemOne = listItems[from].querySelector('.draggable');
     const itemTwo = listItems[to].querySelector('.draggable');
@@ -68,10 +87,6 @@ function swapItems(from, to) {
     listItems[to].appendChild(itemOne);
 }
 
-function dragLeave() {
-    this.classList.remove('over');
-    console.log('Event: ', 'dragleave');
-}
 function addEventListeners() {
     const draggables = document.querySelectorAll('.draggable');
     const dragListItems = document.querySelectorAll('.draggable-list li');
@@ -86,3 +101,5 @@ function addEventListeners() {
         item.addEventListener('dragleave', dragLeave);
     });
 }
+
+check.addEventListener('click', checkOrder);
